@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Checker - User Guide</title>
+    <style>
+        /* Matching Golden Version Styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+            text-align: left;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 22px;
+            margin-top: 20px;
+            border-bottom: 2px solid #007bff;
+            padding-bottom: 5px;
+            color: #333;
+        }
+        h3 {
+            font-size: 18px;
+            margin-top: 15px;
+            color: #007bff;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #333;
+        }
+        ul {
+            font-size: 16px;
+            margin-left: 20px;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 18px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>FM Dev's Redirect Checker - User Guide</h1>
+
+        <h2>Overview</h2>
+        <p>The Redirect Checker is a tool used to test if website redirects are properly configured. By uploading a list of URLs, the tool verifies whether they redirect to the expected destination.</p>
+
+        <h2>Supported File Types</h2>
+        <p>The tool accepts the following file formats:</p>
+        <ul>
+            <li><strong>.txt / .conf</strong> – Nginx rewrite rule files</li>
+            <li><strong>.csv</strong> – Comma-separated values with old and expected URLs</li>
+        </ul>
+
+        <h2>Accepted File Formats</h2>
+
+        <h3>1. Nginx Rewrite Rules</h3>
+        <p>If using an Nginx rewrite configuration file, it should contain lines like this:</p>
+        <pre>
+rewrite ^/old-page$ https://example.com/new-page permanent;
+rewrite ^/blog/post$ /new-post permanent;</pre>
+        <p>The tool will extract the patterns and validate their redirects.</p>
+        <p><strong>NOTE:</strong> — Currently, this utlity does not process Nginx 301/302 directives</p>
+
+        <h3>2. CSV Format</h3>
+        <p>CSV files must contain at least two columns:</p>
+        <ul>
+            <li><strong>First column</strong>: Old URL (can contain the full URL or just the path)</li>
+            <li><strong>Second column</strong>: Expected Redirect URL</li>
+        </ul>
+        <p>Example CSV content:</p>
+        <pre>
+http://example.com/old-page,https://example.com/new-page
+https://olddomain.com/old-product,https://newdomain.com/new-product
+/old-route,https://newdomain.com/new-route</pre>
+        <p>The tool will strip the domain from the first column if it's present.</p>
+
+        <h2>Redirect Statuses</h2>
+        <p>After processing, each redirect is assigned one of the following statuses:</p>
+        <ul>
+            <li><strong>✅ Success</strong> – The redirect matches the expected URL.</li>
+            <li><strong>❓ Domain Mismatch</strong> – Different domain or no domain in expected.</li>
+            <li><strong>⚠️ Mismatch</strong> – The redirect does not match the expected destination.</li>
+            <li><strong>❌ Failed</strong> – No redirect was found for the given URL.</li>
+        </ul>
+
+        <h2>Explanation of Input Fields</h2>
+        <ul>
+            <li><strong>Old Domain</strong>: Enter the domain of the old URLs (e.g., <code>www.example.com</code>).</li>
+            <li><strong>Protocol</strong>: Choose whether the URLs should be checked under <code>HTTP</code> or <code>HTTPS</code>.</li>
+            <li><strong>Upload Redirect File</strong>: Select a <code>.conf</code>, <code>.txt</code>, or <code>.csv</code> file.</li>
+        </ul>
+
+        <p>Once all inputs are set, click "Test Redirects" to begin checking.</p>
+
+        <a href="index.php" class="btn">Go to Redirect Checker</a>
+    </div>
+
+</body>
+</html>
